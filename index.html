@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <img class="nas" src="images/nas.png">
+    
     <h1 class=nas_titulo>Tutorial: Transforme seu Celular em um Servidor NAS Caseiro</h1>
 
     <h3 class="start_texto">Transformar um celular velho, antigo ou sem uso em um servidor é uma forma de 
@@ -69,13 +71,13 @@
     <hr>
     
     <h2>4.1- Iniciar o SSH</h2>
-    <h3>Para iniciar o servidor SSH:</h3>
+    <h3 class="name">Para iniciar o servidor SSH:</h3>
     <h4 class="ident">sshd</h4>
     
     <hr>
     
     <h2>4.2- Deixar o SSH iniciar automaticamente</h2>
-    <h3>Para que o SSH inicie sempre que o celular ligar, adicione ao .bashrc:</h3>
+    <h3 class="name">Para que o SSH inicie sempre que o celular ligar, adicione ao .bashrc:</h3>
     <h4 class="ident">echo "sshd" >> ~/.bashrc</h4>
     
     <hr>
@@ -91,12 +93,12 @@
     </ul>
     <h3>Para instalar, execute:</h3>
     <h4 class="ident">curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash</h4>
-    <h3>Esse comando baixa e instala o File Browser direto do repositório oficial.</h3>
+    <h3 class="name">Esse comando baixa e instala o File Browser direto do repositório oficial.</h3>
     
     <hr>
     
     <h2>6- Iniciar o File Browser</h2>
-    <h3>Para iniciar o File Browser:</h3>
+    <h3 class="name">Para iniciar o File Browser:</h3>
     <h4 class="ident">filebrowser -a 0.0.0.0 -p 8080 -r ~/storage/shared</h4>
     <h3>O que cada parte significa:</h3>
     <ul>
@@ -147,39 +149,39 @@
         <li>sshd</li>
         <li>filebrowser -a 0.0.0.0 -p 8080 -r ~/storage/shared > /dev/null 2>&1 &</li>
     </ul>
-    <h3>Para salvar e sair do vim: pressione Esc, depois digite :wq e pressione Enter.</h3>
+    <h3 class="name">Para salvar e sair do vim: pressione Esc, depois digite :wq e pressione Enter.</h3>
         
     <hr>
     
     <h2>7.4- Tornar o script executável</h2>
     <h4 class="ident">chmod +x ~/.termux/boot/start-services.sh</h4>
-    <h3>Pronto! A partir de agora, toda vez que o celular ligar, o SSH e o File Browser vão iniciar automaticamente.</h3>
+    <h3 class="name">Pronto! A partir de agora, toda vez que o celular ligar, o SSH e o File Browser vão iniciar automaticamente.</h3>
     
     <hr>
     
     <h2>8- Trocar a senha padrão do File Browser</h2>
-    <h3>O File Browser vem com o usuário admin e uma senha padrão. Troque imediatamente por uma senha sua:</h3>
+    <h3 class="name">O File Browser vem com o usuário admin e uma senha padrão. Troque imediatamente por uma senha sua:</h3>
     <h4 class="ident">filebrowser users update admin --password SUA_SENHA_AQUI</h4>
-    <h3>Substitua SUA_SENHA_AQUI pela senha que quiser usar.</h3>
+    <h3 class="name">Substitua "SUA_SENHA_AQUI" pela senha que quiser usar.</h3>
         
     <hr>
     
     <h2>9- Acessar o Servidor NAS</h2>
-    <h3>Com o File Browser rodando, precisamos descobrir o IP do celular na rede:</h3>
+    <h3 class="name">Com o File Browser rodando, precisamos descobrir o IP do celular na rede:</h3>
     <h4 class="ident">ifconfig</h4>
-    <h3>Procure a seção wlan0 no resultado. O IP vai aparecer ao lado de inet, algo como 192.168.1.100.</h3>
-    <h3>Com o IP em mãos, acesse pelo navegador de qualquer dispositivo na mesma rede:</h3>
+    <h3 class="name">Procure a seção wlan0 no resultado. O IP vai aparecer ao lado de inet, algo como 192.168.1.100.</h3>
+    <h3 class="name">Com o IP em mãos, acesse pelo navegador de qualquer dispositivo na mesma rede:</h3>
     <h4 class="ident">http://192.168.1.100:8080</h4>
-    <h3>Faça login com admin e a senha que você definiu no passo 8.</h3>
-    <h3>Dica: Cada dispositivo na rede pode ter um IP diferente. Se o IP do seu celular mudar, repita o ifconfig para descobrir
+    <h3 class="name">Faça login com admin e a senha que você definiu no passo 8.</h3>
+    <h3 class="name">Dica: Cada dispositivo na rede pode ter um IP diferente. Se o IP do seu celular mudar, repita o ifconfig para descobrir
         o novo.</h3>
     
     <hr>
     
     <h2>Passo extra: Monitorar CPU e RAM via SSH</h2>
-    <h3>Para acompanhar o desempenho do servidor pelo terminal (via SSH de outro dispositivo), instale o htop:</h3>
+    <h3 class="name">Para acompanhar o desempenho do servidor pelo terminal (via SSH de outro dispositivo), instale o htop:</h3>
     <h4 class="ident">pkg install htop -y</h4>
-    <h3>E execute com:</h3>
+    <h3 class="name">E execute com:</h3>
     <h4 class="ident">htop</h4>
     
     <hr>

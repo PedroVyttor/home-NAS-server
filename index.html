@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servidor NAS Caseiro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Tutorial: Transforme seu Celular em um Servidor NAS Caseiro</h1>
+
+    <h3>Transformar um celular velho, antigo ou sem uso em um servidor é uma forma de 
+        reutilizar o aparelho, evitando o descarte eletrônico e dando uma segunda vida ao equipamento. 
+        Vamos montar um servidor NAS (Network Attached Storage), que é um servidor projetado para 
+        armazenar e fornecer acesso a arquivos pela rede local. Com ele, você consegue guardar e acessar 
+        seus arquivos de qualquer dispositivo conectado ao mesmo Wi-Fi, direto pelo navegador</h3>
+    
+    <h2>O que você irá precisar</h2>
+    <ul>
+        <li><h3>Um celular Android (qualquer versão razoavelmente recente)</h3></li>
+        <li><h3>Acesso à internet para baixar os apps e pacotes</h3></li>
+        <li><h3>Rede WI-FI local (todos os dispositivos devem estar na mesma rede para acessar o servidor)</h3></li>
+    </ul>
+    
+    <h2>1- Baixar a loja F-Droid</h2>
+    <h3>O F-Droid é uma loja gratuita com vários apps open-source. A maior vantagem é poder se desvincular
+        da Google Play Store e baixar apps diretamente, sem precisar de login ou qualquer tipo de rastreamento.</h3>
+    
+    <h3>Link do F-Droid: <a href="https://f-droid.org/">https://f-droid.org/</a></h3>
+    
+    <h3>Após entrar no site, baixe e instale o .apk do F-Droid normalmente. O Android pode pedir permissão para
+        instalar apps de fontes desconhecidas, só liberar.</h3>
+
+    <h2>2- Baixar o Termux</h2>
+    <h3>Após instalar o F-Droid, vamos instalar o Termux. Ele é um emulador de terminal Linux que roda diretamente
+         no Android, sem precisar de root. É através dele que vamos instalar e gerenciar todos os serviços do nosso 
+         servidor.</h3>
+    <h3>Atenção: Baixe o Termux pelo F-Droid, não pela Google Play Store. A versão da Play Store está desatualizada
+        e pode causar problemas.</h3>
+    <h3>Pode aparecer um aviso do Google Play Protect tentando bloquear o download. Clique em Mais detalhes e instale
+        mesmo assim, é seguro.</h3>
+    
+    <h2>2.1- Atualizar o Termux</h2>
+    <h3>Após instalar e abrir o Termux pela primeira vez, a primeira coisa a fazer é atualizar o sistema de pacotes:</h3>
+    <h4>pkg update && pkg upgrade -y</h4>
+    <h3>Isso garante que você está com as versões mais recentes de tudo. Pode demorar um pouco dependendo da conexão.</h3>
+
+    <h2>3- Liberar acesso ao armazenamento</h2>
+    <h3>Para que o Termux consiga acessar os arquivos do celular, precisamos dar permissão de armazenamento:</h3>
+    <h4>termux-setup-storage</h4>
+    <h3>O Android vai exibir um pop-up pedindo permissão. Clique em Permitir. Sem isso, o File Browser não consegue enxergar 
+        seus arquivos.</h3>
+    
+    <h2>4- Instalar o OpenSSH</h2>
+    <h3>Agora vamos instalar o OpenSSH, que nos permite acessar o celular de outros dispositivos via terminal (SSH). Isso é
+        útil para gerenciar o servidor sem precisar pegar o celular fisicamente.</h3>
+    <h4>pkg install openssh -y</h4>
+
+    <h2>4.1- Iniciar o SSH</h2>
+    <h3>Para iniciar o servidor SSH:</h3>
+    <h4>sshd</h4>
+
+    <h2>4.2- Deixar o SSH iniciar automaticamente</h2>
+    <h3>Para que o SSH inicie sempre que o celular ligar, adicione ao .bashrc:</h3>
+    <h4>echo "sshd" >> ~/.bashrc</h4>
+
+    <h2>5- Instalar o File Browser</h2>
+    <h3>O File Browser vai ser a nossa interface NAS. Ele é leve, open-source e tem uma interface web simples e funcional
+        que permite:</h3>
+    <ul>
+        <li><h3>Enviar (upload) arquivos do computador ou celular para o servidor</h3></li>
+        <li><h3>Baixar arquivos do servidor</h3></li>
+        <li><h3>Ler arquivos diretamente no navegador (PDF, imagens, vídeos, docs)</h3></li>
+        <li><h3>Criar pastas e organizar tudo</h3></li>
+    </ul>
+    <h3>Para instalar, execute:</h3>
+    <h4>curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash</h4>
+    <h3>Esse comando baixa e instala o File Browser direto do repositório oficial.</h3>
+
+    <h2>6- Iniciar o File Browser</h2>
+    <h3>Para iniciar o File Browser:</h3>
+    <h4>filebrowser -a 0.0.0.0 -p 8080 -r ~/storage/shared</h4>
+    <h3>O que cada parte significa:</h3>
+    <ul>
+        <li>-a 0.0.0.0 — aceita conexões de qualquer dispositivo na rede</li>
+        <li>-p 8080 — define a porta de acesso (você pode trocar se quiser)</li>
+        <li>-r ~/storage/shared — define a pasta raiz que o File Browser vai exibir (toda a memória 
+            interna do celular)</li>
+    </ul>
+
+    <h2>6.1- Impedir que o Termux "adormeça"</h2>
+    <h3>Por padrão, o Android pode matar processos em segundo plano para economizar bateria. Para evitar que o File Browser
+        seja encerrado, rode:</h3>
+    <h4>termux-wake-lock</h4>
+    <h3>Esse comando faz três coisas importantes:</h3>
+    <ol>
+        <li>
+            <h3>Impede que o Android mate o processo do File Browser</h3>
+            <h3>Mantém a conexão Wi-Fi ativa mesmo com a tela desligada</h3>
+            <h3>Garante respostas rápidas para quem acessa o servidor</h3>
+        </li>
+    </ol>
+
+    <h2>7- Deixar o File Browser iniciar automaticamente</h2>
+    <h3>Da forma que configuramos no passo 6, o servidor para quando o celular reinicia. Para torná-lo totalmente automático,
+        vamos usar o Termux:Boot.</h3>
+    
+    <h2>7.1- Instalar o Termux:Boot</h2>
+    <h3>Instale o Termux:Boot pelo F-Droid. Após instalar, abra o app pelo menos uma vez — isso é necessário para que o sistema
+        registre o serviço de boot.</h3>
+
+    <h2>7.2- Criar a pasta de boot</h2>
+    <h4>mkdir -p ~/.termux/boot</h4>
+
+    <h2>7.3- Criar o script de inicialização</h2>
+    <h4>vim ~/.termux/boot/start-services.sh</h4>
+    <h3>Dentro do vim, pressione a para entrar no modo de edição e escreva:</h3>
+    <ul>
+        <li>#!/data/data/com.termux/files/usr/bin/sh</li>
+        <li>termux-wake-lock</li>
+        <li>sshd</li>
+        <li>filebrowser -a 0.0.0.0 -p 8080 -r ~/storage/shared > /dev/null 2>&1 &</li>
+    </ul>
+    <h3>Para salvar e sair do vim: pressione Esc, depois digite :wq e pressione Enter.</h3>
+    
+    <h2>7.4- Tornar o script executável</h2>
+    <h4>chmod +x ~/.termux/boot/start-services.sh</h4>
+    <h3>Pronto! A partir de agora, toda vez que o celular ligar, o SSH e o File Browser vão iniciar automaticamente.</h3>
+
+    <h2>8- Trocar a senha padrão do File Browser</h2>
+    <h3>O File Browser vem com o usuário admin e uma senha padrão. Troque imediatamente por uma senha sua:</h3>
+    <h4>filebrowser users update admin --password SUA_SENHA_AQUI</h4>
+    <h3>Substitua SUA_SENHA_AQUI pela senha que quiser usar.</h3>
+    
+    <h2>9- Acessar o Servidor NAS</h2>
+    <h3>Com o File Browser rodando, precisamos descobrir o IP do celular na rede:</h3>
+    <h4>ifconfig</h4>
+    <h3>Procure a seção wlan0 no resultado. O IP vai aparecer ao lado de inet, algo como 192.168.1.100.</h3>
+    <h3>Com o IP em mãos, acesse pelo navegador de qualquer dispositivo na mesma rede:</h3>
+    <h4>http://192.168.1.100:8080</h4>
+    <h3>Faça login com admin e a senha que você definiu no passo 8.</h3>
+    <h3>Dica: Cada dispositivo na rede pode ter um IP diferente. Se o IP do seu celular mudar, repita o ifconfig para descobrir
+        o novo.</h3>
+
+    <h2>Passo extra: Monitorar CPU e RAM via SSH</h2>
+    <h3>Para acompanhar o desempenho do servidor pelo terminal (via SSH de outro dispositivo), instale o htop:</h3>
+    <h4>pkg install htop -y</h4>
+    <h3>E execute com:</h3>
+    <h4>htop</h4>
+
+    <h2>Considerações finais</h2>
+    <h3>Nosso Servidor NAS caseiro está pronto! Algumas observações importantes:</h3>
+    <ul>
+        <li>Performance de upload: Para velocidades melhores, um adaptador de rede USB (USB-C para Ethernet) faz diferença
+            considerável em relação ao Wi-Fi.</li>
+        <li>Velocidade da rede: Se o celular estiver longe do roteador, o upload pode ficar lento. Tente manter o servidor
+            com boa cobertura de sinal.</li>
+        <li>Limitações do hardware: A performance varia de celular para celular. Celulares mais antigos ou com pouca RAM podem ficar
+            lentos com muitos acessos simultâneos.</li>
+        <li>Expandindo o servidor: Como cada serviço roda em uma porta diferente, é possível hospedar outros serviços no mesmo celular
+            (servidor de música, Minecraft, etc.) sem conflito.</li>
+    </ul>
+
+<footer>
+    <p>© 2026 - Pedro Vyttor Pessoa Alves</p>
+    <p>Créditos: MarcusMix · ubuntu/mint</p>
+</footer>
+
+</body>
+</html>

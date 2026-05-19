@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.nas {
+    display: block;
+    margin: auto;
+    width: 40%;
+    width: 300px;
+}
+
 body{
     background-image: url("images/background.jpg");
     background-repeat: no-repeat;
@@ -37,14 +44,17 @@ main{
 .nas_titulo{
     text-align: center;
     font-size: 3.5rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
     line-height: 1.2;
 }
 
 .start_texto{
     width: 80%;
     max-width: 900px;
-    margin: auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
     text-align: justify;
     font-size: 1.15rem;
     line-height: 1.9;
@@ -53,7 +63,7 @@ main{
 
 hr{
     width: 70%;
-    margin: 50px auto;
+    margin: 140px auto;
     border: none;
     height: 2px;
     background: linear-gradient(
@@ -81,6 +91,10 @@ h3{
     font-size: 1.05rem;
 }
 
+.name {
+    text-align: center;
+}
+
 ul, ol{
     width: 80%;
     max-width: 900px;
@@ -99,7 +113,6 @@ li{
 a{
     color: #69b7ff;
     text-decoration: none;
-    transition: 0.3s;
 }
 
 a:hover{

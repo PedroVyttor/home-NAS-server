@@ -1,4 +1,47 @@
 * {
-    background-color: rgb(26, 26, 36);
+    background-color: rgb(115, 115, 149); /* 26, 26, 36 */
 }
 
+hr {
+    width: 65%;
+}
+.nas_titulo {
+    color: white;
+    font-family: 'Segoe UI';
+    text-align: center;
+    margin: 40px;
+}
+
+.start_texto {
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+h2 {
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+h3 {
+    color: white;
+    text-align: center;
+    margin: 10px;
+}
+
+h4 {
+    color: white;
+    text-align: center;
+}
+
+li {
+    color: white;
+    text-align: center;
+}
+
+ol {
+    color: white;
+    text-align: center;
+}
